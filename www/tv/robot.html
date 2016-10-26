@@ -1,0 +1,152 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://imoke.live/plhwin/node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+<script type="text/javascript" src="http://dream.waimaipu.cn/application/views/js/item.js?v=2016081407"></script>
+<script src="http://cdn.ronghub.com/RongIMLib-2.2.4.min.js"></script>
+<script type="text/javascript" src="./js/common_rong.js?v=2016081407"></script>
+<script type="text/javascript" src="word.js"></script>
+
+<script type="text/javascript">	
+	g_barid = 1;
+	g_room = "room"+g_barid;
+	function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+
+    var g_user_id = getUrlParam('user_id');
+	function sleep(d) {
+	  for(var t = Date.now();Date.now() - t <= d;);
+	}
+	g_RAppKey = "x18ywvqf8xdcc";
+	var rongSocket;
+	var g_nickname;
+	var g_headimg;
+	var g_sex;
+	function query_robot_info() {
+		$.post(
+				"http://dream.waimaipu.cn/index.php/user/query_user_info",
+				{
+					user_id:g_user_id,
+					target_user_id:g_user_id
+				},
+				function(json){
+					//不关注是否扣除成功
+					if(json.code == 0) {//查询失败，后面考虑如何提示(thinklater)
+						g_nickname = json.data.nickname;
+						g_headimg = json.data.headimg;
+						g_sex = json.data.sex;
+						$.post(
+							"http://dream.waimaipu.cn/index.php/user/get_robot_rctoken",
+							{
+								user_id:g_user_id,
+								nickname:g_nickname,
+								headimg:g_headimg
+							},
+							function(json){
+								if(json.code == 0) {
+									var rctoken = json.token;
+									rongSocket = {emit: rongCloudEmit, on: rongCloudOn, messageHandler:{}}
+									rongCloudInit(g_RAppKey, rctoken, rongSocket.messageHandler, function() {
+										joinRoom(function() {
+											rongCloudEmit('login', {
+												bar_id:g_barid,
+												user_id:g_user_id,
+												desk_id:1,
+												nickname:g_nickname,
+												headimg:g_headimg,
+												role:'g',
+												sex:g_sex
+											});
+										});
+									});
+
+									function rongCloudOn(type, callback) {
+										rongSocket.messageHandler[type] = callback;
+									}
+								}
+							},
+							"json"
+						);
+					}
+				},
+				"json"
+			);
+	}
+	
+	function GetRandomNum(Min,Max) {   
+		var Range = Max - Min;   
+		var Rand = Math.random();   
+		return(Min + Math.round(Rand * Range));   
+	}   
+
+	function sendNorMessage() {
+		var content;
+		var num = GetRandomNum(0,29);
+		var w = GetRandomNum(0,words.length-1);
+		content = words[w];
+		var msg = {
+					type:'normsg',
+					user_id:g_user_id,
+					bar_id:g_barid,
+					desk_id:1,
+					nickname:g_nickname,
+					headimg:g_headimg,
+					content:content,
+				};
+
+		rongSocket.emit("message", msg);
+	}
+
+	function sendBarrageMessage() {
+		var content;
+		var num = GetRandomNum(0,29);
+		var w = GetRandomNum(0,words.length-1);
+		content = words[w];
+
+		var msg = {
+					type:'danmumsg',
+					user_id:g_user_id,
+					bar_id:g_barid,
+					desk_id:1,
+					nickname:g_nickname,
+					headimg:g_headimg,
+					content:content,
+				};
+		rongSocket.emit("message", msg);
+	}
+
+	function sendGiftMessage(sGift) {
+		var gift = JSON.parse(sGift);
+		rongSocket.emit('giftMessage', {
+							type:'giftMessage',
+							bar_id:g_barid,
+							user_id:g_user_id,
+							nickname:g_nickname,
+							headimg:g_headimg,
+							desk_id:1,
+							
+							target_userid:gift.target_user_id,
+							target_nickname:gift.target_nickname,
+							
+							item_id:gift.item_id,
+							item_name:gift.item_name,
+							item_count:gift.item_count,
+							item_img:gift.item_img
+						});
+	}
+
+	query_robot_info();
+</script>
+</head>
+<body>
+<a href="javascript:void(0)" onclick="start()">开始</a>
+</body>
+</html>

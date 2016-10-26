@@ -1,0 +1,96 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://imoke.live/plhwin/node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+<script type="text/javascript" src="http://dream.waimaipu.cn/application/views/js/item.js?v=2016081407"></script>
+<script type="text/javascript" src="./js/common_rong.js?v=2"></script>
+<script type="text/javascript" src="word.js"></script>
+
+<script type="text/javascript">	
+	var g_guests = [];
+	function Guest(user, bar_id, desk_id) {
+		var _this = this;
+		this.user = user;
+		this.bar_id = bar_id;
+		this.desk_id = desk_id;
+		this.actionTime = new Date().getTime();
+	}
+
+	function create_robot_page(num, user_id) {
+		$("body").append('<iframe name="frm'+num+'" src="'+'./robot.html?user_id='+user_id+'" style="display:none"></iframe>');
+	}
+
+	function sleep(d) {
+	  for(var t = Date.now();Date.now() - t <= d;);
+	}
+	
+	function GetRandomNum(Min,Max) {   
+		var Range = Max - Min;   
+		var Rand = Math.random();   
+		return(Min + Math.round(Rand * Range));   
+	}   
+
+	function query_robots() {
+		$.post(
+				"http://dream.waimaipu.cn/index.php/user/query_robot",
+				{
+				},
+				function(json){
+					if(json.code == 0) {//查询失败，后面考虑如何提示(thinklater)
+						for(var i = 0; i < json.robots.length; i++) {
+							var robot = json.robots[i];
+							sleep(200);
+							var guest = new Guest({user_id:parseInt(robot.user_id),nickname:robot.nickname,headimg:robot.headimg,role:"g", sex:parseInt(robot.sex)}, 1, 1);
+							g_guests.push(guest);
+							create_robot_page(i, robot.user_id);
+						}
+
+						setInterval(function() {
+							var num = GetRandomNum(0,29);
+							var w = GetRandomNum(0,words.length-1);
+							window.frames['frm'+num].sendNorMessage();
+						}, 3000);
+						
+						setInterval(function() {
+							var num = GetRandomNum(0,29);
+							var w = GetRandomNum(0,words.length-1);
+							window.frames['frm'+num].sendBarrageMessage();
+						}, 3000);
+
+						setInterval(function() {
+							var num = GetRandomNum(0,29);
+							var target = GetRandomNum(0,29);
+							var gift = {};
+							
+							gift.target_user_id = g_guests[target].user.user_id;
+							gift.target_nickname = g_guests[target].user.nickname;
+							console.log(gift.target_nickname);
+							
+							var item_pos = GetRandomNum(0,items.length);
+							gift.item_id = items[item_pos].item_id;
+							gift.item_name = items[item_pos].name;
+							gift.item_count = 2;
+							gift.item_img = items[item_pos].img;
+							
+							window.frames['frm'+num].sendGiftMessage(JSON.stringify(gift));
+						}, 3000);
+					}
+				},
+				"json"
+			);
+	}
+	
+	function start() {
+		query_robots();
+	}
+</script>
+</head>
+<body>
+<a href="javascript:void(0)" onclick="start()">开始</a>
+</body>
+</html>

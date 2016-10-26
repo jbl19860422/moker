@@ -1,0 +1,162 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://imoke.live/plhwin/node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+<script type="text/javascript" src="http://dream.waimaipu.cn/application/views/js/item.js?v=2016081407"></script>
+<script type="text/javascript" src="word.js"></script>
+
+<script type="text/javascript">	
+	var g_guests = [];
+	var g_iBarrageMsgCount = 0;
+	var g_iNorMsgCount = 0;
+	function Guest(user, bar_id, desk_id) {
+		this.user = user;
+		this.bar_id = bar_id;
+		this.desk_id = desk_id;
+		this.socket = io.connect('ws://imoke.live:3000');
+		this.actionTime = new Date().getTime();
+		
+		var priv_socket = this.socket;
+		var priv_user = this.user;
+		this.socket.on('connect', function() {
+				priv_socket.emit('login', {
+					bar_id:bar_id,
+					user_id:user.user_id,
+					desk_id:desk_id,
+					nickname:priv_user.nickname,
+					headimg:priv_user.headimg,
+					role:priv_user.role,
+					sex:priv_user.sex
+				});
+		});
+		
+		this.sendNorMessage = function(content) {
+			var msg = {
+						type:'normsg',
+						user_id:this.user.user_id,
+						bar_id:this.bar_id,
+						desk_id:this.desk_id,
+						nickname:this.user.nickname,
+						headimg:this.user.headimg,
+						content:content,
+					};
+
+			this.socket.emit("message", msg);
+			return;
+		}
+		
+		this.sendBarrageMessage = function(content) {
+			var msg = {
+						type:'danmumsg',
+						user_id:this.user.user_id,
+						bar_id:this.bar_id,
+						desk_id:this.desk_id,
+						nickname:this.user.nickname,
+						headimg:this.user.headimg,
+						content:content,
+					};
+			this.socket.emit("message", msg);
+			return;
+		}
+		
+		this.sendGiftMessage = function(gift) {
+			this.socket.emit('giftMessage', {
+								type:'giftMessage',
+								bar_id:this.bar_id,
+								user_id:this.user.user_id,
+								nickname:this.user.nickname,
+								headimg:this.user.headimg,
+								desk_id:this.desk_id,
+								
+								target_userid:gift.target_user_id,
+								target_nickname:gift.target_nickname,
+								
+								item_id:gift.item_id,
+								item_name:gift.item_name,
+								item_count:gift.item_count,
+								item_img:gift.item_img
+							});
+		}
+	}
+	
+	function sleep(d) {
+	  for(var t = Date.now();Date.now() - t <= d;);
+	}
+
+	function query_robots() {
+		$.post(
+				"http://dream.waimaipu.cn/index.php/user/query_robot",
+				{
+				},
+				function(json){
+					//不关注是否扣除成功
+					if(json.code == 0) {//查询失败，后面考虑如何提示(thinklater)
+						for(var i = 0; i < json.robots.length; i++) {
+							var robot = json.robots[i];
+							var guest = new Guest({user_id:parseInt(robot.user_id),nickname:robot.nickname,headimg:robot.headimg,role:"g", sex:parseInt(robot.sex)}, 1, 1);
+							g_guests.push(guest);
+							sleep(100);
+						}
+						sleep(1000);
+						setInterval(function() {
+							var num = GetRandomNum(0,29);
+							g_iNorMsgCount++;
+							var w = GetRandomNum(0,words.length-1);
+							g_guests[num].sendNorMessage(words[w]);
+						}, 1000);
+						
+						setInterval(function() {
+							var num = GetRandomNum(0,29);
+							g_iBarrageMsgCount++;
+							var w = GetRandomNum(0,words.length-1);
+							g_guests[num].sendBarrageMessage(words[w]);
+						}, 3000);
+						
+						setInterval(function() {
+							var num = GetRandomNum(0,29);
+							var target = GetRandomNum(0,29);
+							var gift = {};
+							var item_count = GetRandomNum(1,5);
+							
+							gift.target_user_id = g_guests[target].user.user_id;
+							gift.target_nickname = g_guests[target].user.nickname;
+							console.log(gift.target_nickname);
+							
+							var item_pos = GetRandomNum(0,items.length);
+							gift.item_id = items[item_pos].item_id;
+							gift.item_name = items[item_pos].name;
+							gift.item_count = item_count;
+							gift.item_img = items[item_pos].img;
+							
+							g_guests[num].sendGiftMessage(gift);
+						}, 3000);
+					}
+				},
+				"json"
+			);
+	}
+	
+	function GetRandomNum(Min,Max)
+	{   
+		var Range = Max - Min;   
+		var Rand = Math.random();   
+		return(Min + Math.round(Rand * Range));   
+	}   
+	
+
+	
+	
+	function start() {
+		query_robots();
+	}
+</script>
+</head>
+<body>
+<a href="javascript:void(0)" onclick="start()">开始</a>
+</body>
+</html>

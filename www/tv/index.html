@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <script src="http://cdn.ronghub.com/RongIMLib-2.2.4.min.js"></script>   
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/base.js?v=1"></script>
+	<script type="text/javascript" src="word.js"></script>
+    <title>陌客</title>
+	<script type="text/javascript" src="js/tv.js?v=7"></script>
+	<script type="text/javascript">
+		var g_bar = {};
+		g_bar.bar_id = 1;//<?php echo $bar_id; ?>;
+		g_bar.bar_name = '巴克酒吧';//"<?php echo $bar_name; ?>";
+		g_bar.bar_img = 'http://d.youth.cn/sk/201609/W020160921525989163648.jpg';//"<?php echo $bar_img; ?>";
+	</script>
+</head>
+<body style="background:transparent;">
+    <div class="left-space no-select">
+        <a href="javascript:void(0)" style="color:red;positon:absolute;left:2px;top:5px;z-index:99;text-decoration:none" id="ID_hiActivity"></a>
+        <div class="top-space">
+            <div class="user-space">
+                <img class="user-header-img" src="image/gift/kiss.png" id="ID_singerHeadImg"/>
+                <div class="anchor-space">
+                    <div class="anchor-name text-warp">
+                        <p style="display:inline" id="ID_singerName">悠悠乐队</p>
+                        <div class="level-space"><i class="level-sign star"></i><p style="display:inline" id="ID_liveness">10<p></div>
+                    </div>
+                    <div class="heart-num-space"><i class="anchor-heart animated pulse infinite"></i><span class="heart-num" id="ID_love">804</span></div>
+                </div>
+            </div>
+            <div class="look-num-space">观看数&nbsp;&nbsp;<span class="look-num">2345</span></div>
+        </div>
+        <div class="gift-space scrollbar">
+            <div class="send-gift-list"></div>
+        </div>
+    </div>
+    <div class="center-space no-select">
+        <div class="barrage-space"></div>
+    </div>
+    <div class="right-space">
+        <div class="top-users-space scrollbar no-select">
+            <div class="users-list">
+                 <div class="ks-clear">
+                    <div class="users-item float-left" id="ID_giveGiftRank">
+                        <div class="item-title">送礼</div>
+                        <div class="item-user">
+                            1<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p>10000币</p>
+                            </div>
+                        </div>
+                        <div class="item-user">
+                            2<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p>10000币</p>
+                            </div>
+                        </div>
+                        <div class="item-user">
+                            3<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p>10000币</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="users-item float-right" id="ID_gotGiftRank">
+                        <div class="item-title">收礼</div>
+                        <div class="item-user">
+                            1<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p>10000币</p>
+                            </div>
+                        </div>
+                        <div class="item-user">
+                            2<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p>10000币</p>
+                            </div>
+                        </div>
+                        <div class="item-user">
+                            3<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p>10000币</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ks-clear">
+                    <div class="users-item float-left" id="ID_giveLove">
+                        <div class="item-title">爱心</div>
+                        <div class="item-user">
+                            1<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p><i class="item-heart animated pulse infinite"></i>10000</p>
+                            </div>
+                        </div>
+                        <div class="item-user">
+                            2<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p><i class="item-heart animated pulse infinite"></i>10000</p>
+                            </div>
+                        </div>
+                        <div class="item-user">
+                            3<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p><i class="item-heart animated pulse infinite"></i>10000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="users-item float-right" id="ID_timeRank">
+                        <div class="item-title">参与</div>
+                        <div class="item-user">
+                            1<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p><i class="item-heart animated pulse infinite"></i>10000</p>
+                            </div>
+                        </div>
+                        <div class="item-user">
+                            2<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p><i class="item-heart animated pulse infinite"></i>10000</p>
+                            </div>
+                        </div>
+                        <div class="item-user">
+                            3<img src="image/gift/kiss.png" class="item-user-header"/>
+                            <div class="item-info-space text-warp">
+                                <p>杨超-第二桌</p>
+                                <p><i class="item-heart animated pulse infinite"></i>10000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="talk-space scrollbar">
+            <div class="talk-list"></div>
+        </div>
+    </div>
+
+	<!--
+    <div class="button-space">
+        <div class="button" onclick="$(document).trigger(YC.EVENT.sendGift)">发送礼物</div>
+        <div class="button" onclick="$(document).trigger(YC.EVENT.sendBarrage)">发送弹幕</div>
+        <div class="button" onclick="$(document).trigger(YC.EVENT.sendMessage)">发送消息</div>
+    </div>
+	-->
+	<script type="text/javascript">
+
+        function get_push_url() {
+            $.post(
+                    "http://dream.waimaipu.cn/index.php/user/get_qiniu_pushurl",
+                    {
+                        bar_id:g_bar.bar_id
+                    },
+                    function(json) {
+                        if(json.code != 0) {//查询失败，后面考虑如何提示(thinklater)
+                            get_push_url();
+                            return;
+                        }
+                        var push_url = json.data.push_url;
+                        var width = $(".center-space").width();
+                        var height = $(".center-space").height();
+                        $(".center-space").append('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="100%" height="100%" id="直播" align="middle"> \
+                                                    <param name="movie" value="直播.swf" /> \
+                                                    <param name="quality" value="high" /> \
+                                                    <param name="bgcolor" value="#ffffff" /> \
+                                                    <param name="play" value="true" /> \
+                                                    <param name="loop" value="true" /> \
+                                                    <param name="wmode" value="window" /> \
+                                                    <param name="scale" value="showall" /> \
+                                                    <param name="menu" value="true" /> \
+                                                    <param name="devicefont" value="false" /> \
+                                                    <param name="salign" value="" /> \
+                                                    <param name="FlashVars" value="w='+width+'&h='+height+'"> \
+                                                    <param name="allowScriptAccess" value="sameDomain" /> \
+                                                    <object type="application/x-shockwave-flash" data="直播.swf?url='+escape(push_url)+'" width="100%" height="100%"> \
+                                                        <param name="movie" value="直播.swf" /> \
+                                                        <param name="quality" value="high" /> \
+                                                        <param name="bgcolor" value="#ffffff" /> \
+                                                        <param name="play" value="true" /> \
+                                                        <param name="loop" value="true" /> \
+                                                        <param name="wmode" value="window" /> \
+                                                        <param name="scale" value="showall" /> \
+                                                        <param name="menu" value="true" /> \
+                                                        <param name="devicefont" value="false" /> \
+                                                        <param name="salign" value="" /> \
+                                                        <param name="FlashVars" value="w='+width+'&h='+height+'"> \
+                                                        <param name="allowScriptAccess" value="sameDomain" /> \
+                                                        <a href="http://www.adobe.com/go/getflash"> \
+                                                            <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="获得 Adobe Flash Player" /> \
+                                                        </a> \
+                                                    </object> \
+                                                </object>'
+                                            );
+                    },
+                    "json"
+                );
+        }
+
+		$(function(){
+            get_push_url();
+            $.post(
+                    "http://dream.waimaipu.cn/index.php/admin/query_activity",
+                    {
+                        bar_id:g_bar.bar_id
+                    },
+                    function(json) {
+                        if(json.code != 0) {//查询失败，后面考虑如何提示(thinklater)
+                            return;
+                        }
+                        var actInfo = json.activity_info;
+                        $("#ID_hiActivity").html(actInfo.activity_name);
+                        $("#ID_hiActivity").attr('href', actInfo.activity_pcurl);
+                    },
+                    "json"
+                );
+		});
+	</script>
+</body>
+</html>

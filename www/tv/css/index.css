@@ -1,0 +1,733 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    height: 100%;
+    font-family: 'Microsoft YaHei';
+}
+.text-warp {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-wrap: break-word;
+    word-break:break-all;
+}
+/*清除浮动*/
+.ks-clear:after, .clear:after {
+    content: '\20';
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.ks-clear, .clear {
+    *zoom: 1;
+}
+.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}
+/*重写滚动条样式 for webkit浏览器*/
+/*滚动条整体部分，可以设置宽度啥的*/
+.scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 8px;
+}
+/*滚动条两端的按钮*/
+.scrollbar::-webkit-scrollbar-button {
+    width: 8px;
+    height: 0px;
+}
+/*外层轨道*/
+.scrollbar::-webkit-scrollbar-track {
+    background: #101010;
+    border:solid 1px #121212;
+    box-shadow: 0px 0px 3px #121212 inset;
+    border-radius:10px;
+}
+/*内层滚动槽*/
+.scrollbar::-webkit-scrollbar-track-piece {
+
+}
+/*滚动的滑块*/
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #999;
+    border: thin solid gray;
+    border-radius:10px;
+}
+/*滚动的滑块,鼠标放上时*/
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #7d7d7d;
+}
+/*重写滚动条样式 for ie浏览器*/
+.scrollbar {
+    scrollbar-arrow-color: #121212; /*三角箭头的颜色*/
+    scrollbar-face-color: #333333; /*立体滚动条的颜色（包括箭头部分的背景色）*/
+    scrollbar-3dlight-color: #333333; /*立体滚动条亮边的颜色*/
+    scrollbar-highlight-color: #666666; /*滚动条的高亮颜色（左阴影？）*/
+    scrollbar-shadow-color: #121212; /*立体滚动条阴影的颜色*/
+    scrollbar-darkshadow-color: #333333; /*立体滚动条外阴影的颜色*/
+    scrollbar-track-color: #333333; /*立体滚动条背景颜色*/
+    scrollbar-base-color:#333333; /*滚动条的基色*/
+}
+/*禁止选中*/
+.no-select {
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    -o-user-select: none;
+    user-select: none;
+}
+/*字体颜色和字体居中*/
+.text-left {
+    text-align: left;
+}
+.text-center {
+    text-align: center;
+}
+.text-right {
+    text-align: right;
+}
+.color-2ed0d6 {
+    color: #2ed0d6;
+}
+.color-4cc7f5 {
+    color: #4cc7f5;
+}
+.color-ffffff {
+    color: #ffffff;
+}
+.color-red {
+    color: red;
+}
+.color-ffdb35 {
+    color: #ffdb35;
+}
+/*公用弹窗*/
+.toast {
+    position: absolute;
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    background-color: rgba(0,0,0,.5);
+    color: #fff;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -20px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 6px;
+    z-index: 99;
+}
+.backdrop {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 98;
+    background-color: rgba(0,0,0,.5);
+}
+.loading {
+    position: absolute;
+    width: 160px;
+    margin-top: -20px;
+    height: 40px;
+    line-height: 40px;
+    z-index: 99;
+    padding: 0 20px 0 60px;
+    background: url(../image/loading.gif) no-repeat;
+    background-color: #fff;
+    background-size: 24px 24px;
+    background-position: 24px 8px;
+    top: 50%;
+    left: 50%;
+    margin-left: -120px;
+    margin-top: -20px;
+    border-radius: 6px;
+}
+
+/*动画播放延迟*/
+.delay-1{
+    animation-delay:1s;
+    -webkit-animation-delay:1s;
+}
+.delay-2{
+    animation-delay:2s;
+    -webkit-animation-delay:2s;
+}
+/*新增动画*/
+@-webkit-keyframes msgInOut {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    10% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+    80% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+    92% {
+        opacity: 1;
+        -webkit-transform: scale3d(.475, .475, .475) translate3d(42px, 0, 0);
+        transform: scale3d(.475, .475, .475) translate3d(42px, 0, 0);
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: scale(.1) translate3d(-2000px, 0, 0);
+        transform: scale(.1) translate3d(-2000px, 0, 0);
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+    }
+}
+@keyframes msgInOut {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    10% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+    80% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+    92% {
+        opacity: 1;
+        -webkit-transform: scale3d(.475, .475, .475) translate3d(42px, 0, 0);
+        transform: scale3d(.475, .475, .475) translate3d(42px, 0, 0);
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: scale(.1) translate3d(-2000px, 0, 0);
+        transform: scale(.1) translate3d(-2000px, 0, 0);
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+    }
+}
+.msg-in-out {
+    -webkit-animation-duration: 6s;
+    animation-duration: 6s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: msgInOut;
+    animation-name: msgInOut;
+}
+@-webkit-keyframes msgOut {
+    from {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+    80% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+    92% {
+        opacity: 1;
+        -webkit-transform: scale3d(.475, .475, .475) translate3d(42px, 0, 0);
+        transform: scale3d(.475, .475, .475) translate3d(42px, 0, 0);
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: scale(.1) translate3d(-2000px, 0, 0);
+        transform: scale(.1) translate3d(-2000px, 0, 0);
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+    }
+}
+
+@keyframes msgOut {
+    from {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+    80% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+    92% {
+        opacity: 1;
+        -webkit-transform: scale3d(.475, .475, .475) translate3d(42px, 0, 0);
+        transform: scale3d(.475, .475, .475) translate3d(42px, 0, 0);
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: scale(.1) translate3d(-2000px, 0, 0);
+        transform: scale(.1) translate3d(-2000px, 0, 0);
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+    }
+}
+
+.msg-out {
+    -webkit-animation-duration: 5s;
+    animation-duration: 5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: msgOut;
+    animation-name: msgOut;
+}
+@-webkit-keyframes barrageInOut {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(150%, 0, 0);
+        transform: translate3d(150%, 0, 0);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+    5% {
+        opacity: 1;
+        right: 0;
+        -webkit-transform: none;
+        transform: none;
+        -webkit-animation-timing-function: linear;
+        animation-timing-function: linear;
+    }
+    90% {
+        opacity: 1;
+        right: 60%;
+        -webkit-transform: none;
+        transform: none;
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+    to {
+        opacity: 0;
+        right: 60%;
+        -webkit-transform: translate3d(-300%, 0, 0);
+        transform: translate3d(-300%, 0, 0);
+    }
+}
+@keyframes barrageInOut {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(150%, 0, 0);
+        transform: translate3d(150%, 0, 0);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+    5% {
+        opacity: 1;
+        right: 0;
+        -webkit-transform: none;
+        transform: none;
+        -webkit-animation-timing-function: linear;
+        animation-timing-function: linear;
+    }
+    90% {
+        opacity: 1;
+        right: 60%;
+        -webkit-transform: none;
+        transform: none;
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+    to {
+        opacity: 0;
+        right: 60%;
+        -webkit-transform: translate3d(-300%, 0, 0);
+        transform: translate3d(-300%, 0, 0);
+    }
+}
+.barrage-in-out {
+    -webkit-animation-duration: 10s;
+    animation-duration: 10s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: barrageInOut;
+    animation-name: barrageInOut;
+}
+/*左侧区域*/
+.left-space {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    /*background: url(../image/leftback.png) no-repeat center;
+    background-size: 100% 100%;*/
+    z-index: 1;
+}
+.left-space .top-space {
+    top: 30px;
+    position: absolute;
+    right: 0;
+    width: 240px;
+}
+.left-space .user-space {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 60px;
+    background: url(../image/singerinforback.png) no-repeat center;
+    background-size: 100% 100%;
+}
+.user-header-img {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    border-radius: 25px;
+    background-color: #fff;
+    top: 5px;
+    left: 5px;
+}
+.user-space .anchor-space {
+    display: block;
+    color: #fff;
+    padding-left: 65px;
+}
+.anchor-space .anchor-name {
+    position: relative;
+    line-height: 30px;
+    height: 30px;
+    font-size: 16px;
+    padding-right: 60px;
+}
+.anchor-name .level-space {
+    position: absolute;
+    right: 8px;
+    top: 4px;
+    width: 50px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    background-color: #57983d;
+    border-radius: 5px;
+    font-size: 12px;
+}
+.anchor-name .level-space .level-sign {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    vertical-align: -3px;
+}
+.level-space .level-sign.star {
+    background-image: url(../image/levelstar.png);
+}
+.level-space .level-sign.sun {
+    background-image: url(../image/levelsun.png);
+}
+.anchor-space .heart-num-space {
+    line-height: 20px;
+    height: 20px;
+    font-size: 14px;
+}
+.heart-num-space .anchor-heart {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(../image/heart.png) center no-repeat;
+    vertical-align: middle;
+    background-size: 18px 15px;
+}
+.heart-num-space .heart-num {
+    display: inline-block;
+    margin-left: 5px;
+}
+.look-num-space {
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    color: #eac938;
+    padding-left: 30px;
+}
+.look-num-space .look-num {
+    display: inline-block;
+}
+/*右侧礼物区域*/
+.gift-space {
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 325px;
+    bottom: 0;
+    overflow-x: visible;
+    overflow-y: auto;
+    color: #fff;
+    line-height: 50px;
+    padding-left: 30px;
+    background-color: rgba(0,0,0,.1);
+}
+.send-gift-list {
+    width: 255px;
+}
+.send-gift-list .gift-item {
+    position: relative;
+    background-color: rgba(0,0,0,.5);
+    height: 50px;
+    line-height: 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    padding-right: 60px;
+    margin-top: 20px;
+}
+.gift-item .gift-header-img {
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    border-radius: 25px;
+}
+.gift-item .gift-info {
+    padding-left: 5px;
+    width: 130px;
+    display: inline-block;
+    vertical-align: top;
+}
+.gift-item .gift-goods {
+    position: absolute;
+    display: block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    top: -5px;
+    right: 0;
+}
+.gift-goods .gift-img {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+.gift-goods .gift-num {
+    position: absolute;
+    top: -5px;
+    right: -60px;
+    width: 60px;
+    height: 25px;
+    text-align: left;
+    line-height: 20px;
+    font-size: 28px;
+    color: #4cc7f5;
+}
+/*中间播放器区域*/
+.center-space {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 400px;
+    bottom: 0;
+    transition: left 1s;
+    -moz-transition: left 1s; /* Firefox 4 */
+    -webkit-transition: left 1s; /* Safari 和 Chrome */
+    -o-transition: left 1s; /* Opera */
+    z-index: 0;
+    overflow: hidden;
+}
+/*弹幕区域，位置可控*/
+.barrage-space {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+    height: 250px;
+    transform: translateZ(0);
+    z-index: 1;
+    overflow: hidden;
+}
+.barrage-space .barrage-item {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    display: inline-block;
+    width: max-content;
+    height: 40px;
+    line-height: 40px;
+    background: rgba(0,0,0,.4);
+    border-radius: 20px;
+    padding-right: 20px;
+    font-size: 13px;
+    min-width: 185px;
+    word-break:keep-all;
+    white-space:nowrap;
+}
+.barrage-space .barrage-item.p1 {
+    top: 55px
+}
+.barrage-space .barrage-item.p2 {
+    top: 105px
+}
+.barrage-space .barrage-item.p3 {
+    top: 155px
+}
+.barrage-space .barrage-item.p4 {
+    top: 205px
+}
+.barrage-space .barrage-item.p5 {
+    top: 25px
+}
+.barrage-space .barrage-item.p6 {
+    top: 75px
+}
+.barrage-space .barrage-item.p7 {
+    top: 125px
+}
+.barrage-space .barrage-item.p8 {
+    top: 175px
+}
+.barrage-space .barrage-item .barrage-header-img {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #fff;
+    vertical-align: -15px;
+    margin-right: 5px;
+}
+/*右边信息显示区域*/
+.right-space {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 400px;
+    background: url(../image/rightback.png) no-repeat center;
+    background-size: 100% 100%;
+    z-index: 1;
+}
+.top-users-space {
+    display: block;
+    width: 100%;
+    height: 60%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.top-users-space .users-list {
+    margin-top: 30px;
+}
+.top-users-space .users-item {
+    display: block;
+    width: 190px;
+    margin-bottom: 20px;
+}
+.users-item .item-title {
+    width: 102px;
+    height: 30px;
+    line-height: 25px;
+    text-align: center;
+    text-shadow: 1px 1px 1px #a5a3a4;
+    font-size: 16px;
+    color: #e6e2e3;
+    background: url(../image/rightclassback.png) no-repeat center;
+    background-size: 100% 100%;
+    margin: 0 auto 10px auto;
+}
+.users-item .item-user {
+    position: relative;
+    color: #ffdb35;
+    font-size: 14px;
+    line-height: 30px;
+    padding: 0 10px;
+}
+.users-item .item-user-header {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    vertical-align: middle;
+    margin: 0 8px;
+    background-color: #fff;
+}
+.users-item .item-info-space {
+    width: 110px;
+    display: inline-block;
+    vertical-align: top;
+}
+.users-item .item-heart {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(../image/heart.png) center no-repeat;
+    vertical-align: middle;
+    background-size: 18px 15px;
+}
+/*聊天窗口*/
+.talk-space {
+    display: block;
+    width: 100%;
+    height: 40%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.talk-space .talk-list {
+    width: 350px;
+    margin: auto;
+    font-size: 14px;
+    color: #ffdb35;
+}
+.talk-space .talk-item {
+    position: relative;
+    line-height: 30px;
+}
+.talk-item .talk-level {
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    background-color: #57983d;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #fff;
+    margin-right: 5px;
+}
+.talk-level .level-sign {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    vertical-align: -3px;
+}
+.talk-level .level-sign.star {
+    background-image: url(../image/levelstar.png);
+}
+.talk-level .level-sign.sun {
+    background-image: url(../image/levelsun.png);
+}
+/*模拟操作按钮*/
+.button-space {
+    position: absolute;
+    width: 100px;
+    height: 150px;
+    top: 50%;
+    left: 50%;
+    border-radius: 5px;
+    margin-left: -50px;
+    margin-top: -75px;
+    z-index: 9;
+}
+.button-space .button {
+    background-color: #003bb3;
+    color: #ffffff;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 10px;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+}
